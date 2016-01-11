@@ -5,9 +5,9 @@ var express = require('express')
 
 var app = express()
 
-app.get('/jenkins/c/http/*', function(req,res) {
+app.get('/jenkins/c/https/*', function(req,res) {
   var jurl = req.params[0]
-  var url = 'http://' + jurl + '/lastSuccessfulBuild/cobertura/api/json/?depth=2'
+  var url = 'https://' + jurl + '/lastSuccessfulBuild/cobertura/api/json/?depth=2'
   request(url, function(err, response, body) {
     if (!err && response.statusCode == 200) {
       var elements = JSON.parse(body)['results']['elements']
@@ -28,7 +28,7 @@ app.get('/jenkins/c/http/*', function(req,res) {
           if (typeof style != 'undefined') {
             badge_url += '?style=' + style
           }
-          console.log('[GET] ' + '/jenkins/c/http/' + jurl)
+          console.log('[GET] ' + '/jenkins/c/https/' + jurl)
           console.log('      generating badge(' + badge_url + ')')
           res.redirect(badge_url)
         }
@@ -36,7 +36,7 @@ app.get('/jenkins/c/http/*', function(req,res) {
     } else {
       console.log(err)
       var badge_url = 'https://img.shields.io/badge/coverage-none-lightgrey.svg'
-      console.log('[GET] ' + '/jenkins/c/http/' + jurl)
+      console.log('[GET] ' + '/jenkins/c/https/' + jurl)
       console.log('      generating badge(' + badge_url + ')')
       res.redirect(badge_url)
     }
